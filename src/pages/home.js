@@ -4,7 +4,7 @@ import { Button } from "bloomer";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { BlackIcon } from "../helpers/black_icon";
-import { faBinoculars } from "@fortawesome/free-solid-svg-icons"
+import { faBinoculars, faPlusCircle, faUser } from "@fortawesome/free-solid-svg-icons"
 import { getAllPosts } from "../queries";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -22,7 +22,22 @@ height: 40px;
 width: 40px;
 z-index: 2;
 border-radius: 50%;
-  z-index: 2;
+`;
+
+const AddButton = styled(Button)`
+  margin: 0 auto;
+  display: block;
+  top: 94%;
+  border-radius: 50%;
+`;
+
+const ProfileButton = styled(Button)`
+position: absolute;
+bottom: 0.5em;
+height: 40px;
+width: 40px;
+z-index: 2;
+border-radius: 50%;
 `;
 
 export const Home = () => {
@@ -60,6 +75,14 @@ export const Home = () => {
         onSightingPinClicked={setClickedSightingId}
         sightings={data.posts}
       >
+        <ProfileButton>
+          <BlackIcon icon={faUser}/>
+        </ProfileButton>
+
+        <AddButton>
+          <BlackIcon icon={faPlusCircle}/>
+        </AddButton>
+
         <Link to="/sightings">
           <SightingButton>
             <BlackIcon icon={faBinoculars}/>
