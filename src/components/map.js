@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMapGL, { Popup } from "react-map-gl";
+import ReactMapGL from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 
@@ -20,6 +20,7 @@ export const Map = ({
         onViewportChange={onViewportChange}
         mapStyle="mapbox://styles/mapbox/streets-v11"
       >
+        {children}
       </ReactMapGL>
     </div>
   );
