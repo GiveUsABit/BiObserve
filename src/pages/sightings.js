@@ -4,8 +4,13 @@ import {
   Container,
 } from "bloomer";
 import { BlackIcon } from "../helpers/black_icon";
-
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled-base";
+import {faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
+import { PanelTabs } from "bloomer/lib/components/Panel/PanelTabs";
+import { PanelTab } from "bloomer/lib/components/Panel/PanelTab";
+import { useQuery } from "@apollo/react-hooks";
+import { getAllPosts } from "../queries";
 
 
 
@@ -29,10 +34,19 @@ const OrganizationContainer = styled(Container)`
 
 
 export const Sightings = () => {
-  
+
+    const {loading,error,data} = useQuery(getAllPosts);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error! ${error.message}</p>;
+    console.log(data);
   return (
     <>
-
+        <Link to="/">
+        <MapButton>
+          <BlackIcon icon={faMapMarkedAlt}></BlackIcon>
+        </MapButton>
+      </Link>
     </>
   );
 };
