@@ -52,7 +52,6 @@ export const Sightings = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! ${error.message}</p>;
-    console.log(data);
 
     const posts = data.posts
     .filter(postData => {
@@ -114,7 +113,7 @@ export const Sightings = () => {
                     isActive={selectedPanel ==="Reptile"}
                     onClick={() => setSelectedPanel("Reptile")}
                     >
-                    Reptile
+                    Reptiles
                 </PanelTab>
             </PanelTabs>
             {posts}

@@ -5,7 +5,8 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { BlackIcon } from "../helpers/black_icon";
 import { faBinoculars } from "@fortawesome/free-solid-svg-icons"
-
+import { getAllPosts } from "../queries";
+import { useQuery } from "@apollo/react-hooks";
 
 const InputDiv = styled.div`
   text-align: center;
@@ -31,11 +32,33 @@ export const Home = () => {
     zoom: 14
   });
 
+  const [clickedSightingId, setClickedSightingId] = useState(null);
+
+
+
+  const { loading, error, data = { posts: [] }} = useQuery(
+    getAllPosts
+  );
+  const clickedSightingIndex = useMemo(
+    () =>
+      data.posts.findIndex(({ post_id }) => post_id === clickedSightingId),
+    [data.posts, clickedSightingId]
+  );
+
+
+  if(loading) return <p>Loading...</p>;
+  if (error) return <p>Error! ${error.message}</p>;
+
+  const { sightings = [] } = data;
+
   return (
     <>
       <Map
         viewport={mapViewport}
         onViewportChange={setMapViewport}
+        clickedSightingIndex={clickedSightingIndex}
+        onSightingPinClicked={setClickedSightingId}
+        sightings={data.posts}
       >
         <Link to="/sightings">
           <SightingButton>

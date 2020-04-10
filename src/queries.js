@@ -6,6 +6,9 @@ export const getAllPosts = gql`
             description
             time
             species
+            latitude
+            longitude
+            post_id
             user {
                 name
             }
