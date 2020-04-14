@@ -4,8 +4,12 @@ import "./App.css";
 import "bulma/css/bulma.css";
 import { Home } from "./pages/home";
 import { Sightings } from "./pages/sightings";
+import { Profile } from "./pages/profile";
 import { ApolloClient, gql, HttpLink, InMemoryCache } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
+import history from "./utils/history";
+import NavBar from "./components/NavBar";
+
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -24,8 +28,12 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Router>
+      <Router history={history}>
+        <NavBar />
         <Switch>
+          <Route path="/profile">
+            <Profile />
+          </Route>
           <Route path="/sightings">
             <Sightings />
             </Route>

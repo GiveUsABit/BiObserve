@@ -7,6 +7,7 @@ import { BlackIcon } from "../helpers/black_icon";
 import { faBinoculars, faPlusCircle, faUser } from "@fortawesome/free-solid-svg-icons"
 import { getAllPosts } from "../queries";
 import { useQuery } from "@apollo/react-hooks";
+import { AddModal } from "../components/AddModal";
 
 const InputDiv = styled.div`
   text-align: center;
@@ -34,6 +35,7 @@ const AddButton = styled(Button)`
 const ProfileButton = styled(Button)`
 position: absolute;
 bottom: 0.5em;
+left: 1em;
 height: 40px;
 width: 40px;
 z-index: 2;
@@ -49,6 +51,7 @@ export const Home = () => {
 
   const [clickedSightingId, setClickedSightingId] = useState(null);
 
+  const [statusAddModal, setStatusAddModal] = useState(false);
 
 
   const { loading, error, data = { posts: [] }} = useQuery(
@@ -75,12 +78,24 @@ export const Home = () => {
         onSightingPinClicked={setClickedSightingId}
         sightings={data.posts}
       >
-        <ProfileButton>
-          <BlackIcon icon={faUser}/>
-        </ProfileButton>
+        <Link to="/profile">
+          <ProfileButton>
+            <BlackIcon icon={faUser}/>
+          </ProfileButton>
+        </Link>
+
+        <AddModal
+          isActive={statusAddModal}
+          onModalClose={() => setStatusAddModal(false)}
+        />
 
         <AddButton>
-          <BlackIcon icon={faPlusCircle}/>
+          <BlackIcon 
+            icon={faPlusCircle}
+            onClick={e => {
+              setStatusAddModal(!statusAddModal);
+            }}
+          />
         </AddButton>
 
         <Link to="/sightings">
