@@ -8,6 +8,8 @@ import { faBinoculars, faPlusCircle, faUser } from "@fortawesome/free-solid-svg-
 import { getAllPosts } from "../queries";
 import { useQuery } from "@apollo/react-hooks";
 import { AddModal } from "../components/AddModal";
+import { useAuth0 } from "../react-auth0-spa";
+
 
 const InputDiv = styled.div`
   text-align: center;
@@ -52,6 +54,7 @@ export const Home = () => {
   const [clickedSightingId, setClickedSightingId] = useState(null);
 
   const [statusAddModal, setStatusAddModal] = useState(false);
+  const {  user } = useAuth0();
 
 
   const { loading, error, data = { posts: [] }} = useQuery(
@@ -66,6 +69,9 @@ export const Home = () => {
 
   if(loading) return <p>Loading...</p>;
   if (error) return <p>Error! ${error.message}</p>;
+  if(!user){
+    return <div>Please Login</div>
+  }
 
   const { sightings = [] } = data;
 

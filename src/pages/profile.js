@@ -81,11 +81,6 @@ export const Profile = () => {
     margin: -10px;
   `;
 
-
-     if (loading || !user) {
-       return <div>Please Login</div>;
-     }
-
   return (
     <>
       <Avatar hasTextAlign="centered">
