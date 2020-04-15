@@ -7,6 +7,8 @@ import { PanelBlock } from "bloomer/lib/components/Panel/PanelBlock";
 import { Link } from "react-router-dom";
 import {faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
 import { BlackIcon } from "../helpers/black_icon";
+import { EventModal } from "../components/EventModal";
+
 
 export const Profile = () => {
   
@@ -26,14 +28,13 @@ export const Profile = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({query: `query { posts { id, description}}`}),
+        body: JSON.stringify({query: `query { posts { id, description, species}}`}),
       })).json();
       if (body.errors) {
         console.error(body.errors[0].message)
       } else {
         setPosts(body.data.posts)
       }
-      console.log(token)
     }
 
     isAuthenticated && loadPosts()
@@ -87,7 +88,8 @@ export const Profile = () => {
     margin: 10px;
   `;
 
-  const postContainer = styled(Container)`
+  
+  const PostContainer = styled(Container)`
     outline-style: solid;
     outline-width: thin;
     font-size: 0.9em;
@@ -103,14 +105,11 @@ export const Profile = () => {
 
   return (
     <>
-      <Avatar hasTextAlign="centered">
-        <img className="profile-picture" src={user.picture} alt="Profile" />
-        <h2>{user.name}</h2>
-      </Avatar>
+
 
       <Post>
         <div className="title-line">
-          <h1>My Events</h1>
+          <h1>My Sightings</h1>
           </div>
           <AddModal
           isActive={statusAddModal}
@@ -122,12 +121,18 @@ export const Profile = () => {
             onClick={e => {
               setStatusAddModal(!statusAddModal);
             }}
-          >Add Event</AddButton>
+          >Add Post</AddButton>
           </div>
+
+        <EventModal
+          isActive={statusModalOpen}
+          data={selectedPost}
+          onModalClose={() => setStatusModalOpen(false)}
+        />
 
         <ul>
           {posts.map(post => (
-            <postContainer>
+            <PostContainer>
                 <EditButton
                 isColor="info"
                 isOutlined
@@ -139,13 +144,13 @@ export const Profile = () => {
                 }
               }
               >
-                edit
+                Edit
               </EditButton>
               <Column hasTextAlign="centered">
               <li key={post.id}>{post.species}</li>
               <p>{post.description}</p>
               </Column>
-            </postContainer>
+            </PostContainer>
           ))}
         </ul>
       </Post>
