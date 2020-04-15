@@ -26,7 +26,7 @@ export default class Pins extends PureComponent {
             stroke: "none",
             transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
           }}
-          onClick={() => onClick(sighting.post_id)}
+          onClick={() => onClick(sighting.id)}
         >
           <path d={ICON} />
         </svg>

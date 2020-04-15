@@ -12,6 +12,7 @@ export const Map = ({
   onSightingPinClicked,
   sightings = []
 }) => {
+
   return (
     <div style={{ width: "100%", height: "100vh" }}>
       <ReactMapGL

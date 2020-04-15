@@ -62,7 +62,7 @@ export const Home = () => {
   );
   const clickedSightingIndex = useMemo(
     () =>
-      data.posts.findIndex(({ post_id }) => post_id === clickedSightingId),
+      data.posts.findIndex(({ id }) => id === clickedSightingId),
     [data.posts, clickedSightingId]
   );
 
