@@ -8,7 +8,7 @@ export const getAllPosts = gql`
             species
             latitude
             longitude
-            post_id
+            id
             user {
                 name
             }

@@ -14,10 +14,30 @@ export const Profile = () => {
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [statusAddModal, setStatusAddModal] = useState(false);
   const { loading, user, isAuthenticated, logout, getTokenSilently } = useAuth0();
-  const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState({});
 
+  useEffect(() => {
+    const loadPosts = async () => {
+      const token = await getTokenSilently();
+      const body = await (await fetch('https://biobserve.herokuapp.com/v1/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({query: `query { posts { id, description}}`}),
+      })).json();
+      if (body.errors) {
+        console.error(body.errors[0].message)
+      } else {
+        setPosts(body.data.posts)
+      }
+      console.log(token)
+    }
 
+    isAuthenticated && loadPosts()
+   }, [isAuthenticated, getTokenSilently])
 
   const Avatar = styled(Container)`
     margin-top: auto .profile-picture {
@@ -34,7 +54,7 @@ export const Profile = () => {
   width: 40px;
 `;
 
-  const Event = styled(Container)`
+  const Post = styled(Container)`
     h1 {
       font-size: 36px;
       line-height: 40px;
@@ -67,7 +87,7 @@ export const Profile = () => {
     margin: 10px;
   `;
 
-  const EventContainer = styled(Container)`
+  const postContainer = styled(Container)`
     outline-style: solid;
     outline-width: thin;
     font-size: 0.9em;
@@ -87,6 +107,49 @@ export const Profile = () => {
         <img className="profile-picture" src={user.picture} alt="Profile" />
         <h2>{user.name}</h2>
       </Avatar>
+
+      <Post>
+        <div className="title-line">
+          <h1>My Events</h1>
+          </div>
+          <AddModal
+          isActive={statusAddModal}
+          onModalClose={() => setStatusAddModal(false)}
+          />
+
+          <div className="button-line">
+          <AddButton isOutlined isColor="primary"
+            onClick={e => {
+              setStatusAddModal(!statusAddModal);
+            }}
+          >Add Event</AddButton>
+          </div>
+
+        <ul>
+          {posts.map(post => (
+            <postContainer>
+                <EditButton
+                isColor="info"
+                isOutlined
+                onClick={e => {
+                  
+                  setStatusModalOpen(!statusModalOpen); 
+                  setSelectedPost(post);
+                
+                }
+              }
+              >
+                edit
+              </EditButton>
+              <Column hasTextAlign="centered">
+              <li key={post.id}>{post.species}</li>
+              <p>{post.description}</p>
+              </Column>
+            </postContainer>
+          ))}
+        </ul>
+      </Post>
+
       <Link to="/">
         <MapButton>
           <BlackIcon icon={faMapMarkedAlt}></BlackIcon>
