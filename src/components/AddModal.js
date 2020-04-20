@@ -24,13 +24,54 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import { DropdownMenu } from "bloomer/lib/components/Dropdown/Menu/DropdownMenu";
 import { DropdownContent } from "bloomer/lib/components/Dropdown/Menu/DropdownContent";
 import { DropdownItem } from "bloomer/lib/components/Dropdown/Menu/DropdownItem";
+import { insertPostQuery } from "../queries";
+import { useAuth0 } from "../react-auth0-spa";
+
 
 export const AddModal = ({ isActive, onModalClose }) => {
   const [selectedDate, handleDateChange] = useState(new Date());
-  const [titleText, setTitleText] = useState("");
   const [descriptionText, setDescriptionText] = useState("")
   const [addressText, setAddressText] = useState("")
   const [dropdownSelect, setDropdownSelect] = useState("Species");
+  const { loading, user, isAuthenticated, logout, getTokenSilently } = useAuth0();
+
+
+  const submitPost = async () => {
+    const postBody = {
+      address: addressText,
+      description: descriptionText,
+      species: dropdownSelect,
+      time: selectedDate
+    }
+    const token = await getTokenSilently();
+    const body = await (await fetch('https://biobserve.herokuapp.com/v1/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({query: `
+      mutation($address: String, $description: String, $species: String, $time: timestamptz ) {
+        insert_posts(objects: [{address: $address, description: $description, species: $species, time: $time}]) {
+          affected_rows
+          returning {
+            address
+            description
+            species
+            time
+          }
+        }
+      }
+      `, variables: {...postBody}}),
+      })).json();
+      if (body.errors) {
+        console.error(body.errors[0].message)
+      } else {
+        console.log(body.data);
+      }
+  }
+  
+  const submitHandler = e => submitPost()
 
   return (
     <Modal isActive={isActive}>
@@ -89,7 +130,9 @@ export const AddModal = ({ isActive, onModalClose }) => {
             </Field>
         </ModalCardBody>
         <ModalCardFooter>
-            <Button isColor='success'>Save</Button>
+            <Button isColor='success'
+            onClick={submitHandler}
+            >Save</Button>
             <Button isColor='warning' onClick={onModalClose}>Cancel</Button>
         </ModalCardFooter>
       </ModalCard>

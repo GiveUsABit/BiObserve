@@ -15,3 +15,17 @@ export const getAllPosts = gql`
         }
     }
 `;
+
+export const insertPostQuery = gql`
+mutation($objects: [posts_insert_input!]!) {
+    insert_posts(objects: $objects) {
+      affected_rows
+      returning {
+        address
+        description
+        species
+        time
+      }
+    }
+}
+`
