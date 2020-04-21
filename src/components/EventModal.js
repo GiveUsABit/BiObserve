@@ -55,8 +55,8 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
         console.error(body.errors[0].message)
       } else {
         console.log(body.data);
-
       }
+      onModalClose(true)
   }
  
   const deleteHandler = e => deletePost()

@@ -13,7 +13,6 @@ import {
   Control,
   Input,
   TextArea,
-  Icon
 } from "bloomer";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -24,7 +23,6 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import { DropdownMenu } from "bloomer/lib/components/Dropdown/Menu/DropdownMenu";
 import { DropdownContent } from "bloomer/lib/components/Dropdown/Menu/DropdownContent";
 import { DropdownItem } from "bloomer/lib/components/Dropdown/Menu/DropdownItem";
-import { insertPostQuery } from "../queries";
 import { useAuth0 } from "../react-auth0-spa";
 
 
@@ -33,7 +31,7 @@ export const AddModal = ({ isActive, onModalClose }) => {
   const [descriptionText, setDescriptionText] = useState("")
   const [addressText, setAddressText] = useState("")
   const [dropdownSelect, setDropdownSelect] = useState("Species");
-  const { loading, user, isAuthenticated, logout, getTokenSilently } = useAuth0();
+  const { getTokenSilently } = useAuth0();
 
 
   const submitPost = async () => {
@@ -69,6 +67,7 @@ export const AddModal = ({ isActive, onModalClose }) => {
       } else {
         console.log(body.data);
       }
+      onModalClose(true)
   }
   
   const submitHandler = e => submitPost()
