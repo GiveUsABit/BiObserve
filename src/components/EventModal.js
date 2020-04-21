@@ -23,13 +23,43 @@ import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { BlackIcon } from "../helpers/black_icon";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
+import { useAuth0 } from "../react-auth0-spa";
 
 export const EventModal = ({ isActive, onModalClose, data }) => {
   const [selectedDate, handleDateChange] = useState(new Date());
   const [descriptionText, setDescriptionText] = useState(data.description)
   const [addressText, setAddressText] = useState(data.address)
   const [dropdownSelect, setDropdownSelect] = useState(data.species);
+  const { getTokenSilently } = useAuth0();
+
+  const deletePost = async () => {
+    const token = await getTokenSilently();
+    const body = await (await fetch('https://biobserve.herokuapp.com/v1/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({query: `
+      mutation($id: Int) {
+        delete_posts(where: {id: {_eq: $id}}) {
+          affected_rows
+          returning {
+            id
+          }
+        }
+      }
+      `, variables: {id: data.id}}),
+      })).json();
+      if (body.errors) {
+        console.error(body.errors[0].message)
+      } else {
+        console.log(body.data);
+
+      }
+  }
  
+  const deleteHandler = e => deletePost()
 
   return (
     <Modal isActive={isActive}>
@@ -37,7 +67,9 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
       <ModalCard>
       <ModalCardHeader>
             <ModalCardTitle>{data.title}</ModalCardTitle>
-            <Button isColor='danger'>Delete</Button>
+            <Button isColor='danger'
+              onClick={deleteHandler}
+            >Delete</Button>
         </ModalCardHeader>
         <ModalCardBody>
         <Label>Species</Label>
@@ -89,8 +121,8 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
             </Field>
         </ModalCardBody>
         <ModalCardFooter>
-            <Button isColor='warning' onClick={onModalClose}>Cancel</Button>
             <Button isColor='success' onClick={onModalClose}>Save</Button>
+            <Button isColor='warning' onClick={onModalClose}>Cancel</Button>
         </ModalCardFooter>
       </ModalCard>
     </Modal>
