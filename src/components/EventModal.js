@@ -26,7 +26,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import { useAuth0 } from "../react-auth0-spa";
 
 export const EventModal = ({ isActive, onModalClose, data }) => {
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const [selectedDate, handleDateChange] = useState(data.time);
   const [descriptionText, setDescriptionText] = useState(data.description)
   const [addressText, setAddressText] = useState(data.address)
   const [dropdownSelect, setDropdownSelect] = useState(data.species);

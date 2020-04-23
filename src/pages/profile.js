@@ -28,7 +28,7 @@ export const Profile = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({query: `query { posts { id, description, species}}`}),
+        body: JSON.stringify({query: `query { posts { id, description, species, time}}`}),
       })).json();
       if (body.errors) {
         console.error(body.errors[0].message)
