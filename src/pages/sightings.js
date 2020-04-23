@@ -89,7 +89,7 @@ export const Sightings = () => {
                         value={searchText}
                         onChange={event => setSearchText(event.target.value)}
                         isSize="small"
-                        placeholder="Find User Post"
+                        placeholder="Find Specific User"
                     />
                     <span className="icon is-left">
                         <FontAwesomeIcon icon={faSearch} size="xs" />
