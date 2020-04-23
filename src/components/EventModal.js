@@ -59,7 +59,38 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
       onModalClose(true)
   }
  
+  const updatePost = async () => {
+    const token = await getTokenSilently();
+    const body = await (await fetch('https://biobserve.herokuapp.com/v1/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({query: `
+      mutation ($id: Int, $changes: posts_set_input) {
+        update_posts(where: {id: {_eq: $id}}, _set: $changes) {
+          affected_rows
+          returning {
+            id
+            address
+            description
+            species
+            time
+          }
+        }
+      }
+      `, variables: {id: data.id, changes: {address: addressText, description: descriptionText, species: dropdownSelect, time: selectedDate}}}),
+      })).json();
+      if (body.errors) {
+        console.error(body.errors[0].message)
+      } else {
+        console.log(body.data);
+      }
+      onModalClose(true)
+  }
   const deleteHandler = e => deletePost()
+  const updateHandler = e => updatePost()
 
   return (
     <Modal isActive={isActive}>
@@ -121,7 +152,7 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
             </Field>
         </ModalCardBody>
         <ModalCardFooter>
-            <Button isColor='success' onClick={onModalClose}>Save</Button>
+            <Button isColor='success' onClick={updateHandler}>Save</Button>
             <Button isColor='warning' onClick={onModalClose}>Cancel</Button>
         </ModalCardFooter>
       </ModalCard>
