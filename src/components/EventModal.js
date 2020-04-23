@@ -114,14 +114,14 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
                 <DropdownMenu>
                     <DropdownContent>
                         <DropdownItem href="#" 
-                        onClick={e => setDropdownSelect("Bird")}
+                        onClick={e => setDropdownSelect("Flora")}
                         >
-                        Bird
+                        Flora
                         </DropdownItem>
                         <DropdownItem href="#"
-                        onClick={e => setDropdownSelect("Reptile")}
+                        onClick={e => setDropdownSelect("Fauna")}
                         >
-                        Reptile
+                        Fauna
                         </DropdownItem>
                     </DropdownContent>
                 </DropdownMenu>

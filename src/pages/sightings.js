@@ -104,16 +104,16 @@ export const Sightings = () => {
                     All
                 </PanelTab>
                 <PanelTab
-                    isActive={selectedPanel ==="Bird"}
-                    onClick={() => setSelectedPanel("Bird")}
+                    isActive={selectedPanel ==="Flora"}
+                    onClick={() => setSelectedPanel("Flora")}
                     >
-                    Birds
+                    Flora
                 </PanelTab>
                 <PanelTab
-                    isActive={selectedPanel ==="Reptile"}
-                    onClick={() => setSelectedPanel("Reptile")}
+                    isActive={selectedPanel ==="Fauna"}
+                    onClick={() => setSelectedPanel("Fauna")}
                     >
-                    Reptiles
+                    Fauna
                 </PanelTab>
             </PanelTabs>
             {posts}
