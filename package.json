@@ -50,22 +50,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GiveUsABit/BiObserve.git"
-  },
-  "keywords": [
-    "BiObserve",
-    "ver1"
-  ],
-  "author": "Drake Jared Brett Yin",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GiveUsABit/BiObserve/issues"
-  },
-  "homepage": "https://github.com/GiveUsABit/BiObserve#readme"
+  }
 }
