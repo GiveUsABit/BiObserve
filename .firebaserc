@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "biobserve-846db"
+  },
+  "targets": {
+    "biobserve-846db": {
+      "hosting": {
+        "biobserve": [
+          "build"
+        ]
+      }
+    }
+  }
+}
