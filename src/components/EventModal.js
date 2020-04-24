@@ -30,6 +30,7 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
   const [descriptionText, setDescriptionText] = useState(data.description)
   const [addressText, setAddressText] = useState(data.address)
   const [dropdownSelect, setDropdownSelect] = useState(data.species);
+  const [dropdownActive, setDropdownActive] = useState(false);
   const { getTokenSilently } = useAuth0();
 
   const deletePost = async () => {
@@ -104,9 +105,11 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
         </ModalCardHeader>
         <ModalCardBody>
         <Label>Species</Label>
-            <Dropdown >
+            <Dropdown isActive={dropdownActive} >
                 <DropdownTrigger>
-                    <Button isOutlined aria-haspopup="true" aria-controls="dropdown-menu">
+                    <Button isOutlined aria-haspopup="true" aria-controls="dropdown-menu"
+                    onClick = {e => setDropdownActive(!dropdownActive)}
+                    >
                         <span>{dropdownSelect}</span>
                         <BlackIcon icon={faChevronDown}/>
                     </Button>
@@ -114,12 +117,18 @@ export const EventModal = ({ isActive, onModalClose, data }) => {
                 <DropdownMenu>
                     <DropdownContent>
                         <DropdownItem href="#" 
-                        onClick={e => setDropdownSelect("Flora")}
+                        onClick={e => {
+                          setDropdownSelect("Flora")
+                          setDropdownActive(!dropdownActive)
+                        }}
                         >
                         Flora
                         </DropdownItem>
                         <DropdownItem href="#"
-                        onClick={e => setDropdownSelect("Fauna")}
+                        onClick={e => {
+                          setDropdownSelect("Fauna")
+                          setDropdownActive(!dropdownActive)
+                        }}
                         >
                         Fauna
                         </DropdownItem>
