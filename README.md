@@ -4,6 +4,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 BiObserve is a web-based application which allows users to log spotted locations of flora and fauna seen in nature. With an individual account and unique login, users are able to view a public map displaying all users sightings through dynamic pins. By scrolling around the map, users can view these pins which provide the flora or fauna spotted, who logged it, and when. Additionally, users can view and search all logged animals if they are trying to find sightings of a particular organism or user. Through their individual account, they can also view all posts they have made to the app, edit any posts they had made previously, or add new posts to the map. Together, BiObserve aims to provide a means in which nature lovers and animal spotters can share information of sightings in one seamless and coordinated place.
 
+## Application Deployment
+
+Open link in browser (Google Chrome preferred)
+https://biobserve-846db.web.app
+
+## Project Repo Orginization
+
+All files relating to code can be found in BiObserve repo within GitHub organization GiveUsABit
+Files documenting milestone submissions can be found in MilestoneSubmissions repo
+
 ## Available Scripts
 
 In the project directory, you can run:
