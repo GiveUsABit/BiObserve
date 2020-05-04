@@ -6,13 +6,15 @@ BiObserve is a web-based application which allows users to log spotted locations
 
 ## Application Deployment
 
-Open link in browser (Google Chrome preferred)
+Open link in browser (Google Chrome preferred): 
+
 https://biobserve-846db.web.app
 
 ## Project Repo Orginization
 
-All files relating to code can be found in BiObserve repo within GitHub organization GiveUsABit
-Files documenting milestone submissions can be found in MilestoneSubmissions repo
+All files relating to code can be found in BiObserve repo within GitHub organization GiveUsABit.
+
+Files documenting milestone submissions can be found in MilestoneSubmissions repo.
 
 ## Available Scripts
 
