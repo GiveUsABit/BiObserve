@@ -10,7 +10,7 @@ Open link in browser (Google Chrome preferred):
 
 https://biobserve-846db.web.app
 
-## Project Repo Orginization
+## Project Repo Organization
 
 All files relating to code can be found in BiObserve repo within GitHub organization GiveUsABit.
 
